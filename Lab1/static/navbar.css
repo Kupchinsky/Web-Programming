@@ -1,0 +1,22 @@
+body
+{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.navbar
+{
+	margin-bottom: 20px;
+	background-color: yellow;
+}
+
+ul.nav > li
+{
+	border: 1px solid;
+	border-radius: 7px;
+}
+
+ul.nav > li.active
+{
+	border: 2px solid;
+}
