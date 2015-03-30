@@ -1,0 +1,189 @@
+<!--
+В анкете заполняется информация о десяти сотрудниках: фамилия, дата заключения контракта, и срок (в годах) на который он заключен.
+Ровно через 11 месяцев после начала работы сотрудникам предоставляется отпуск, продолжительностью 24 рабочих дня.
+Создайте форму для ввода данных. Напишите сценарий, определяющий:
+
+9.	Фамилии сотрудников, отпуск которым будет предоставлен в следующем календарном году.
+-->
+<html>
+<head>
+	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+		var tabledata = typeof(localStorage['lab3_table']) != "undefined" ? JSON.parse(localStorage['lab3_table']) : [];
+
+		function deleteEmp(btn)
+		{
+			var tr = $(btn).parent().parent();
+
+			if (!confirm('Вы уверены, что хотите расторгнуть контракт с сотрудником "' + tr.children().first().html() + '"?'))
+				return;
+
+			tabledata.splice(parseInt(tr.attr('emp-id')), 1);
+			writeData();
+			reloadData();
+		}
+
+		function writeData()
+		{
+			localStorage['lab3_table'] = JSON.stringify(tabledata);
+		}
+
+		function appendEmployer(table, index, btn)
+		{
+			var elem = $('<tr emp-id="' + index + '"></tr>');
+			table = table.children('tbody');
+
+			$(tabledata[index]).each(function(index, value)
+			{
+				elem.append($('<td></td>').html(value));
+			});
+
+			if (typeof(btn) != 'undefined' && btn)
+				elem.append($('<td></td>').html('<button onclick="deleteEmp(this);">Расторнуть контракт</button>'));
+
+			table.append(elem);
+		}
+
+		function reloadData()
+		{
+			var table = $('#employers');
+			table.children('tbody').empty();
+
+			$(tabledata).each(function(index)
+			{
+				appendEmployer(table, index, true);
+			});
+		}
+
+		$(function()
+		{
+			reloadData();
+
+			$('#addemp').click(function()
+			{
+				$('table').first().find('input').each(function(index, value)
+				{
+					if ($(value).val().length == 0)
+					{
+						alert('Не заполнено поле "' + $(value).attr('placeholder') + '"!');
+						return false;
+					}
+				});
+
+				// Разбираем дату
+				var date = $('#inputstartdate').val().trim().split('.');
+
+				if (date.length < 3 || date[0] > 31 || date[0] < 1 || date[1] > 12 || date[1] < 1 || date[2] < 1900 || date[2] > 2040)
+				{
+					alert('Некорректная дата заключения контракта!');
+					return false;
+				}
+
+				date = date[0] + '.' + date[1] + '.' + date[2];
+
+				//
+				if (!/^[0-9]+$/.test($('#inputyears').val()) || parseInt($('#inputyears').val()) <= 0)
+				{
+					alert('Некорректный срок контракта!');
+					return false;
+				}
+
+				tabledata.push([$('#inputname').val(), date, parseInt($('#inputyears').val())]);
+				writeData();
+				reloadData();
+
+				return true;
+			});
+
+			$('#perform').click(function()
+			{
+				var cur_date = new Date(), table = $('#employers_result');
+				cur_date.setFullYear(cur_date.getFullYear() + 1);
+				table.children('tbody').empty();
+
+				$(tabledata).each(function(index, value)
+				{
+					var s_date = value[1].split('.'), date = new Date(s_date[2], s_date[1], s_date[0]);
+					date.setMonth(date.getMonth() + 11);
+
+					if (date.getFullYear() == cur_date.getFullYear())
+						appendEmployer(table, index);
+				});
+			});
+		});
+	</script>
+	<style type="text/css">
+		input
+		{
+			width: 200px;
+		}
+		#employers, #employers_result
+		{
+			border-left: 1px solid;
+			border-right: 1px solid;
+			border-top: 1px solid;
+		}
+		#employers th, #employers td, #employers_result th, #employers_result td
+		{
+			border-bottom: 1px solid;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<table>
+			<tbody>
+				<tr>
+					<td>Фамилия:</td>
+					<td><input type="text" id="inputname" placeholder="Фамилия" value="лолка"></td>
+				</tr>
+				<tr>
+					<td>Дата заключения контракта (dd.mm.yyyy):</td>
+					<td><input type="text" id="inputstartdate" placeholder="Дата заключения контракта" value="30.03.2015"></td>
+				</tr>
+				<tr>
+					<td>Срок контракта (в годах):</td>
+					<td><input type="text" id="inputyears" placeholder="Срок контракта" value="10"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="height: 10px"></div>
+		<button id="addemp">Добавить сотрудника</button>
+	</div>
+	<br>
+	<hr>
+	<div>
+		<h2>Сотрудники</h2>
+		<table id="employers">
+			<thead>
+				<tr>
+					<th style="width: 250px">Фамилия</th>
+					<th style="width: 250px">Дата заключения контракта</th>
+					<th style="width: 170px">Срок контракта (лет)</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<hr>
+	<div>
+		<h2>Результат</h2>
+		<table id="employers_result">
+			<thead>
+				<tr>
+					<th style="width: 250px">Фамилия</th>
+					<th style="width: 250px">Дата заключения контракта</th>
+					<th style="width: 170px">Срок контракта (лет)</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<div style="height: 10px"></div>
+		<button id="perform">Выполнить задание</button>
+	</div>
+</body>
+</html>

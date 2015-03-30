@@ -1,0 +1,40 @@
+<!--
+10.	Напишите программу, которая выводит все префиксы данной строки. Строка s1 называется префиксом данной строки s, если s=s1+s2.
+-->
+<html>
+<head>
+	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+		$(function()
+		{
+			function appendResult(text)
+			{
+				$('#resultarea').html($('#resultarea').html() + text + "\n");
+			}
+
+			$('#perform').click(function()
+			{
+				$('#resultarea').empty();
+				appendResult('Найденные префиксы:');
+
+				var text = $('#inputarea').val().trim();
+
+				for (var i = 1; i <= text.length; i++)
+					appendResult(text.substr(0, i));
+			});
+		});
+	</script>
+</head>
+<body>
+	<div>
+		Поле ввода:<br>
+		<input type="text" id="inputarea" style="width: 400px" value="Префикс">
+		<button id="perform">Выполнить задание</button>
+	</div>
+	<br>
+	<div>
+		Поле вывода:<br>
+		<textarea id="resultarea" style="width: 400px; height: 200px" readonly></textarea>
+	</div>
+</body>
+</html>
