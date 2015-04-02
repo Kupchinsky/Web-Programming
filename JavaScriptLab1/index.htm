@@ -1,0 +1,121 @@
+<!--
+10.	Заданы две окружности. Напишите сценарий, который определяет положение окружностей относительно друг друга, и выведите соответствующий рисунок.
+-->
+<html>
+<head>
+	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+		CanvasRenderingContext2D.prototype.clear = 
+		  CanvasRenderingContext2D.prototype.clear || function (preserveTransform) {
+			if (preserveTransform) {
+			  this.save();
+			  this.setTransform(1, 0, 0, 1, 0, 0);
+			}
+
+			this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			if (preserveTransform) {
+			  this.restore();
+			}           
+		};
+
+		$(function()
+		{
+			$('#perform').click(function()
+			{
+				$('table').find('input').each(function(index, value)
+				{
+					if ($(value).val().length == 0)
+					{
+						alert('Не заполнено поле "' + $(value).attr('placeholder') + '"!');
+						return false;
+					}
+
+					if (!/^[0-9]+$/.test($(value).val()))
+					{
+						alert('Некорректно заполнено поле "' + $(value).attr('placeholder') + '"!');
+						return false;
+					}
+
+					if ($(value).attr('id').startsWith('inputr') && parseInt($(value).val()) <= 0)
+					{
+						alert('Радиус должен быть больше 0!');
+						return false;
+					}
+				});
+
+				// Рисуем
+				var canvas = $('#result')[0], ctx = canvas.getContext('2d');
+				ctx.clear();
+
+				ctx.beginPath();
+				ctx.arc(160 + parseInt($('#inputx1').val()), 160 + parseInt($('#inputy1').val()), $('#inputr1').val(), 0, Math.PI * 2, true);
+				ctx.fillStyle = '#FF0000';
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.arc(160 + parseInt($('#inputx2').val()), 160 + parseInt($('#inputy2').val()), $('#inputr2').val(), 0, Math.PI * 2, true);
+				ctx.fillStyle = '#000000';
+				ctx.fill();
+
+				// Координатные оси
+				ctx.beginPath();
+				ctx.moveTo(160, 0);
+				ctx.lineTo(160, 320);
+
+				ctx.moveTo(0, 160);
+				ctx.lineTo(320, 160);
+
+				ctx.fillText('x', 310, 170);
+				ctx.fillText('y', 165, 10);
+
+				ctx.stroke();
+			});
+		});
+	</script>
+</head>
+<body>
+	<h3>Окружность 1</h3>
+	<div>
+		<table>
+			<tbody>
+				<tr>
+					<td>Центр (x):</td>
+					<td><input type="text" id="inputx1" placeholder="Центр (x)" value="0"></td>
+				</tr>
+				<tr>
+					<td>Центр (y):</td>
+					<td><input type="text" id="inputy1" placeholder="Центр (y)" value="0"></td>
+				</tr>
+				<tr>
+					<td>Радиус:</td>
+					<td><input type="text" id="inputr1" placeholder="Радиус" value="1"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h3>Окружность 2</h3>
+	<div>
+		<table>
+			<tbody>
+				<tr>
+					<td>Центр (x):</td>
+					<td><input type="text" id="inputx2" placeholder="Центр (x)" value="0"></td>
+				</tr>
+				<tr>
+					<td>Центр (y):</td>
+					<td><input type="text" id="inputy2" placeholder="Центр (y)" value="0"></td>
+				</tr>
+				<tr>
+					<td>Радиус:</td>
+					<td><input type="text" id="inputr2" placeholder="Радиус" value="1"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<button id="perform">Выполнить задание</button>
+	<br><br>
+	<canvas id="result" height="320" width="320" style="border: 1px dashed"></canvas>
+</body>
+</html>
