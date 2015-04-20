@@ -61,14 +61,20 @@
 
 			$('#addemp').click(function()
 			{
+				var ret = false;
+
 				$('table').first().find('input').each(function(index, value)
 				{
 					if ($(value).val().length == 0)
 					{
 						alert('Не заполнено поле "' + $(value).attr('placeholder') + '"!');
+						ret = true;
 						return false;
 					}
 				});
+
+				if (ret)
+					return false;
 
 				// Разбираем дату
 				var date = $('#inputstartdate').val().trim().split('.');
@@ -108,7 +114,7 @@
 
 					if (date.getFullYear() == cur_date.getFullYear())
 					{
-						//alert(index + ' отпуск: ' + date);
+						alert(index + ' отпуск: ' + date);
 						appendEmployer(table, index);
 					}
 				});
