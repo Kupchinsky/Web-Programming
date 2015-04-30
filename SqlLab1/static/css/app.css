@@ -1,0 +1,21 @@
+body
+{
+	background: #000 url("images/ui-bg_loop_25_000000_21x21.png") 50% 50% repeat;
+	color: #FFF;
+	font-size: 12pt;
+}
+
+div.acc
+{
+	font-size: 10pt !important;
+}
+
+.pd-bottom
+{
+	padding-bottom: 20px;
+}
+
+.pd-top
+{
+	padding-top: 20px;
+}
