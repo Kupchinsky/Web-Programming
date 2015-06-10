@@ -26,7 +26,7 @@ function CreateModel_drugs_types(content_object, callback)
 				selectmenu.selectmenu();
 			}
 		});
-		
+
 		if (Reload)
 			Loaders['drugs_applytypes']();
 	};
@@ -208,7 +208,7 @@ function CreateModel_drugs_applytypes(content_object, callback)
 	});
 
 	CreateLineSeparator(content_object);
-	
+
 	load();
 }
 
@@ -272,7 +272,8 @@ function CreateModel_drugs_subtypes(content_object, callback)
 				accordion.accordion(
 				{
 					collapsible: true,
-					active: false
+					active: false,
+					heightStyle: "content"
 				});
 			}
 		});
@@ -506,13 +507,14 @@ function CreateModel_drugs(content_object, callback)
 				accordion.accordion(
 				{
 					collapsible: true,
-					active: false
+					active: false,
+					heightStyle: "content"
 				});
 			}
 		});
 
-		// Остановка перегрузки
-		Reload = false;
+		if (Reload)
+			Loaders['technologies']();
 	};
 
 	Loaders['drugs'] = load;
