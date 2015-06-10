@@ -5,7 +5,19 @@
 
 	$current_page = isset($_GET['page']) ? $_GET['page'] : 'index';
 
-	$allowed_pages = array('index', 'drugs_types', 'drugs_applytypes', 'drugs_subtypes', 'drugs', 'medicaments', 'technologies', 'technologies_medicaments');
+	$allowed_pages = array
+	(
+		'index',
+		'drugs_types',
+		'drugs_applytypes',
+		'drugs_subtypes',
+		'drugs',
+		'medicaments',
+		'technologies',
+		'technologies_medicaments',
+		'storage_drugs',
+		'storage_medicaments'
+	);
 
 	if (!in_array($current_page, $allowed_pages))
 		die('Page not allowed');

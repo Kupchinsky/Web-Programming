@@ -39,6 +39,7 @@
 	<script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="static/js/app_model_drugs.js?ver=1"></script>
 	<script type="text/javascript" src="static/js/app_model_medicaments.js?ver=1"></script>
+	<script type="text/javascript" src="static/js/app_model_storage.js?ver=1"></script>
 	<script type="text/javascript" src="static/js/app.js?ver=1"></script>
 </head>
 <body>

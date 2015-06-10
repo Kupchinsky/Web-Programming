@@ -28,7 +28,7 @@ function CreateModel_drugs_types(content_object, callback)
 		});
 
 		if (Reload)
-			Loaders['drugs_applytypes']();
+			Loaders['drugs_subtypes']();
 	};
 
 	Loaders['drugs_types'] = load;
@@ -514,7 +514,10 @@ function CreateModel_drugs(content_object, callback)
 		});
 
 		if (Reload)
+		{
 			Loaders['technologies']();
+			Loaders['storage_drugs']();
+		}
 	};
 
 	Loaders['drugs'] = load;

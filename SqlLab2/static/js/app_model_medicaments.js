@@ -62,7 +62,10 @@ function CreateModel_medicaments(content_object, callback)
 		});
 
 		if (Reload)
+		{
 			Loaders['technologies']();
+			Loaders['storage_medicaments']();
+		}
 	};
 
 	Loaders['medicaments'] = load;
@@ -231,74 +234,73 @@ function CreateModel_technologies(content_object, callback)
 					heightStyle: "content"
 				});
 			}
-		}), load_components = function(_accordion_item_sub_object, id)
-		{
-			accordion_item_sub_object = _accordion_item_sub_object;
+		});
 
-			_JSONLoad(accordion_item_sub_object, './?page=technologies_medicaments&technology=' + id, function(data)
-			{
-				accordion_item_sub_object.html('Компоненты приготовления:');
-
-				if (data.length == 0)
-				{
-					CreateAlert(accordion_item_sub_object, 'Данные отсутствуют');
-				}
-				else
-				{
-					var accordion_components = CreateAccordion(accordion_item_sub_object, '');
-
-					$(data).each(function(key, value)
-					{
-						var accordion_item_object = AddAccordionItem(accordion_components, value['medicament_id'], value['medicament_name']);
-
-						CreateSubContent(accordion_item_object).html('Количество: ' + value['quantity']);
-						CreateSeparator(accordion_item_object);
-						CreateButton(accordion_item_object, '', 'Изменить').click(function()
-						{
-							edit_component_dialog
-								.attr('technology_id', id)
-								.attr('medicament_id', value['medicament_id'])
-								.attr('quantity', value['quantity'])
-								.dialog('open');
-						});
-						CreateButton(accordion_item_object, '', 'Удалить').click(function()
-						{
-							if (!confirm('Вы уверены?'))
-								return;
-
-							$.post('./?page=technologies_medicaments',
-							{
-								action: 'delete',
-								technology: id,
-								medicament: value['medicament_id']
-							},
-							function(data)
-							{
-								if (data.success)
-									load_components(accordion_item_sub_object, id);
-								else
-									alert('Что-то пошло не так!');
-							}, 'json');
-						});
-					});
-
-					accordion_components.accordion(
-					{
-						collapsible: true,
-						active: false,
-						heightStyle: "content"
-					});
-				}
-			});
-		};
-
-		// Остановка перегрузки
 		Reload = false;
+	}, load_components = function(_accordion_item_sub_object, id)
+	{
+		accordion_item_sub_object = _accordion_item_sub_object;
+
+		_JSONLoad(accordion_item_sub_object, './?page=technologies_medicaments&technology=' + id, function(data)
+		{
+			accordion_item_sub_object.html('Компоненты приготовления:');
+
+			if (data.length == 0)
+			{
+				CreateAlert(accordion_item_sub_object, 'Данные отсутствуют');
+			}
+			else
+			{
+				var accordion_components = CreateAccordion(accordion_item_sub_object, '');
+
+				$(data).each(function(key, value)
+				{
+					var accordion_item_object = AddAccordionItem(accordion_components, value['medicament_id'], value['medicament_name']);
+
+					CreateSubContent(accordion_item_object).html('Количество: ' + value['quantity']);
+					CreateSeparator(accordion_item_object);
+					CreateButton(accordion_item_object, '', 'Изменить').click(function()
+					{
+						edit_component_dialog
+							.attr('technology_id', id)
+							.attr('medicament_id', value['medicament_id'])
+							.attr('quantity', value['quantity'])
+							.dialog('open');
+					});
+					CreateButton(accordion_item_object, '', 'Удалить').click(function()
+					{
+						if (!confirm('Вы уверены?'))
+							return;
+
+						$.post('./?page=technologies_medicaments',
+						{
+							action: 'delete',
+							technology: id,
+							medicament: value['medicament_id']
+						},
+						function(data)
+						{
+							if (data.success)
+								load_components(accordion_item_sub_object, id);
+							else
+								alert('Что-то пошло не так!');
+						}, 'json');
+					});
+				});
+
+				accordion_components.accordion(
+				{
+					collapsible: true,
+					active: false,
+					heightStyle: "content"
+				});
+			}
+		});
 	};
 
 	Loaders['technologies'] = load;
 
-	var add_component_dialog = CreateDialog(content_object, 'Добавление технологии',
+	var add_component_dialog = CreateDialog(content_object, 'Добавление компонента',
 	{
 		autoOpen: false,
 		modal: true,

@@ -16,8 +16,10 @@ $(function()
 		CreateModel_technologies(content_object, callback);
 	});
 
-	CreateTab('management_storage', 'Склад', function(content_object, callback)
+	CreateTab('management_storage', 'Склады', function(content_object, callback)
 	{
+		CreateModel_storage_drugs(content_object, callback);
+		CreateModel_storage_medicaments(content_object, callback);
 	});
 
 	CreateTab('management_orders', 'Заказы', function(content_object, callback)
