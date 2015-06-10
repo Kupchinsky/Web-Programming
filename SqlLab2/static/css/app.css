@@ -1,0 +1,49 @@
+body
+{
+	background: #000 url("images/ui-bg_loop_25_000000_21x21.png") 50% 50% repeat;
+	color: #FFF;
+	font-size: 12px;
+}
+
+.big
+{
+	font-size: 16px;
+}
+
+div.title
+{
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+div.subtitle
+{
+	font-size: 16px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.plus_bottom
+{
+	margin-bottom: 10px;
+}
+
+select
+{
+	width: 600px;
+}
+
+select.dialog
+{
+	width: 200px;
+}
+
+input
+{
+	width: 200px;
+}
+
+.ui-dialog
+{
+	overflow: visible;
+}
