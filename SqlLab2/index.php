@@ -16,7 +16,10 @@
 		'technologies',
 		'technologies_medicaments',
 		'storage_drugs',
-		'storage_medicaments'
+		'storage_medicaments',
+		'recipients',
+		'orders_drugs',
+		'orders_medicaments'
 	);
 
 	if (!in_array($current_page, $allowed_pages))

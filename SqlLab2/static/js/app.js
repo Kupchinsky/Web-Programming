@@ -22,8 +22,10 @@ $(function()
 		CreateModel_storage_medicaments(content_object, callback);
 	});
 
-	CreateTab('management_orders', 'Заказы', function(content_object, callback)
+	CreateTab('management_orders', 'Торговля', function(content_object, callback)
 	{
+		CreateModel_recipients(content_object, callback);
+		CreateModel_orders_drugs(content_object, callback);
 	});
 
 	CreateTab('queries', 'Запросы к системе', function(content_object, callback)
@@ -149,4 +151,12 @@ function IsButtonDisabled(dialog_object, index)
 {
 	var buttons = dialog_object.dialog('option', 'buttons');
 	return typeof(buttons[index].disabled) != 'undefined' && buttons[index].disabled;
+}
+
+function CreateDatePickerWithLabel(table_object, caption, def_value)
+{
+	return CreateInput(table_object, caption).append('<input type="text" value="' + def_value + '"></td></tr>').children('input').first().datepicker(
+	{
+		dateFormat: 'dd.mm.yy'
+	});
 }
