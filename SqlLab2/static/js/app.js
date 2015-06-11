@@ -26,10 +26,12 @@ $(function()
 	{
 		CreateModel_recipients(content_object, callback);
 		CreateModel_orders_drugs(content_object, callback);
+		CreateModel_orders_medicaments(content_object, callback);
 	});
 
 	CreateTab('queries', 'Запросы к системе', function(content_object, callback)
 	{
+		
 	});
 
 	CreateTab('er', 'ER диаграмма', function(content_object, callback)

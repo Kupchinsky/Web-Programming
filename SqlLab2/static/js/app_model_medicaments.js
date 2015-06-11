@@ -90,7 +90,10 @@ function CreateModel_medicaments(content_object, callback)
 				function(data)
 				{
 					if (data.success)
+					{
+						Reload = true;
 						load();
+					}
 					else
 						alert('Что-то пошло не так!');
 

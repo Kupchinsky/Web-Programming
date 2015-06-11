@@ -241,7 +241,7 @@ function CreateModel_storage_medicaments(content_object, callback)
 		});
 	};
 
-	Loaders['storage_medicament'] = load;
+	Loaders['storage_medicaments'] = load;
 
 	var edit_dialog = CreateDialog(content_object, 'Изменение медикамента',
 	{
